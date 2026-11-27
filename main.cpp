@@ -167,50 +167,9 @@ int main(){
     std::cout<<"\nМАТРИЦА СМЕЖНОСТИ:\n";
     print_matrix(matrix);
 
-    bool has_edges=false;
-
-    for(int i=0;i<n;i++){
-        for(int j=i+1;j<n;j++){
-            if(matrix[i][j]==1){
-                has_edges=true;
-            }
-        }
-    }
-
-    if(!has_edges){
-        std::cout<<"В графе нет ребер. Можно начать с любой вершины\n";
-    }
-
-    int start;
-
-    while(true){
-        std::cout<<"\nВведите начальную вершину от 1 до "<<n<<": ";
-
-        if(!(std::cin>>start)||start<1||start>n){
-            std::cout<<"НЕВЕРНЫЙ НОМЕР ВЕРШИНЫ!\n";
-            return 1;
-        }
-
-        bool isolated=true;
-
-        for(int j=0;j<n;j++){
-            if(matrix[start-1][j]==1){
-                isolated=false;
-                break;
-            }
-        }
-
-        if(!isolated||!has_edges){
-            break;
-        }
-
-        std::cout<<"Вершина изолирована. Выбери другую\n";
-    }
-
     std::vector<bool> NUM(n,false);
 
     std::cout<<"\nОБХОД В ШИРИНУ ПО МАТРИЦЕ:\n";
-    BFS(matrix,NUM,start-1);
 
     for(size_t i=0;i<NUM.size();i++){
         if(!NUM[i]){
@@ -226,7 +185,6 @@ int main(){
     NUM.assign(n,false);
 
     std::cout<<"\nОБХОД В ШИРИНУ ПО СПИСКУ СМЕЖНОСТИ:\n";
-    BFS_spisok(spisok,NUM,start-1);
 
     for(size_t i=0;i<NUM.size();i++){
         if(!NUM[i]){
@@ -237,7 +195,6 @@ int main(){
     NUM.assign(n,false);
 
     std::cout<<"\nОБХОД В ШИРИНУ С СОБСТВЕННОЙ ОЧЕРЕДЬЮ:\n";
-    BFS_dop(matrix,NUM,start-1);
 
     for(size_t i=0;i<NUM.size();i++){
         if(!NUM[i]){
@@ -256,7 +213,7 @@ int main(){
         double standard_time=measure_time(test_matrix,false);
         double own_time=measure_time(test_matrix,true);
 
-        std::cout<<count<<"   "<<standard_time<<"   "<<own_time<<"\n";
+        std::cout<<count<<"\t"<<standard_time<<"\t\t"<<own_time<<"\n";
     }
 
     return 0;
